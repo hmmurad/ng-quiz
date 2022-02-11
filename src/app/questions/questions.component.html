@@ -1,0 +1,86 @@
+<div class="row shadow-lg p-3 rounded-b-lg">
+  <div class="flex justify-between items-center">
+    <img src="../../assets/images/angularjs.png" alt="" />
+    <div class="text-center">
+      <h2 class="text-2xl font-semibold">Angular & Typescript Quiz</h2>
+      <p>Welcome <span class="font-semibold">{{name}}</span></p>
+    </div>
+  </div>
+  <div class="border-b-2 border-gray-300 mt-4"></div>
+  <ng-container *ngIf="!isQuizCompleted">
+      <!-- utilities -->
+  <div class="flex justify-around items-center mt-4 mb-2 font-medium">
+    <p>{{points}} points</p>
+    <p>Question {{currentQuestion + 1}} of {{questionList.length}}</p>
+    <p class="flex items-center">
+      <span>{{counter}} secs</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 ml-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    </p>
+  </div>
+  <!-- progress bar -->
+  <div class="progress p-0 mt-2">
+    <div
+      class="progress-bar progress-bar-striped bg-primary"
+      role="progressbar"
+      [ngStyle]="{width: this.progressPercentage + '%'}"
+      aria-valuenow="100"
+      aria-valuemin="0"
+      aria-valuemax="100"
+    ></div>
+  </div>
+  <!-- quiz -->
+  <div class="mt-3 p-0">
+      <div class="border-1 mb-2 border-gray-200 p-3 text-xl font-semibold rounded-md">{{questionList[currentQuestion]?.questionText}}</div>
+    <ul class="">
+        <li  (click)="answer(currentQuestion + 1, option)" class="border-1 mb-1 cursor-pointer hover:border-1 hover:border-red-400 border-gray-200 p-2 text-md font-semibold rounded-md" *ngFor="let option of questionList[currentQuestion]?.options; let i = index" appChangeBg [isCorrect]="option.correct">{{i+1}}. {{ option.text}}
+        </li>
+    </ul>
+  </div>
+  <!-- footer -->
+  <div class="flex justify-around items-center mt-3">
+      <button class="btn btn-primary py-2 px-4" [disabled]="currentQuestion == 0" (click)="previousQuestion()"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
+      </svg></button>
+
+
+      <button class="btn btn-primary py-2 px-4" (click)="resetQuiz()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+      </button>
+
+      <button class="btn btn-primary py-2 px-4" (click)="nextQuestion()"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg></button>
+  </div>
+  </ng-container>
+  <ng-container 
+  *ngIf="isQuizCompleted">
+    <!-- resultPage -->
+    <div class="flex justify-around items-center space-x-3 mt-3">
+      <img class="w-48 h-48" src="../../assets/images/angularjs.png" alt="">
+      <div>
+        <h2 class="text-center text-2xl font-semibold mb-2">Congratulations  <span class="font-semibold italic">{{name | uppercase}}</span> !!</h2>
+        <ul class="list-group">
+          <li class="list-group-item">Total Attempted : {{this.questionList.length}}</li>
+          <li class="list-group-item">Total Incorrect Answer : {{this.inCorrectAnswer}}</li>
+          <li class="list-group-item">Total Correct Answer : {{this.correctAnswer}}</li>
+          <li class="list-group-item">Total Points : {{this.points}}</li>
+        </ul>
+      </div>
+    </div>
+</ng-container>
+</div>
